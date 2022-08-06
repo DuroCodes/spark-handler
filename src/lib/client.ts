@@ -16,7 +16,11 @@ export interface ExtendedClientOptions extends ClientOptions {
   loggingEnabled?: boolean;
 }
 
-export class ExtendedClient extends Client {
+class LoggerClient extends Client {
+  public logger = logger;
+}
+
+export class ExtendedClient extends LoggerClient {
   public messageCommands: Collection<string, MessageCommand> = new Collection();
 
   public messageCommandAliases: Collection<string, MessageCommand> = new Collection();
