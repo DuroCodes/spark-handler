@@ -1,0 +1,8 @@
+/node_modules
+/dist
+/.eslintcache
+/package-lock.json
+/.env
+/.VSCodeCounter
+/.vscode
+*.DS_Store
