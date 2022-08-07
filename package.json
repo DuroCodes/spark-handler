@@ -4,7 +4,7 @@
   "description": "a discord.js handler in typescript",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "build": "tsc",
     "test": "ts-node src/index.ts"
   },
