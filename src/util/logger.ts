@@ -10,6 +10,9 @@ export const logger = {
   error: (message: unknown) => (
     console.log(`${red.bold('[ERROR]')} ${message}`)
   ),
+  trace: (message: unknown) => (
+    console.trace(`${'\b'.repeat(7)}${red.bold('[ERROR]')} ${message}`)
+  ),
   debug: (message: unknown) => (
     console.log(`${magenta.bold('[DEBUG]')} ${message}`)
   ),

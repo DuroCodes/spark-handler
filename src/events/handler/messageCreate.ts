@@ -23,6 +23,26 @@ export default new Event({
       || client.messageCommands.find((c) => !!c.aliases?.includes(cmd.toLowerCase()));
 
     if (!command) return;
-    await command.run({ client, message, args });
+
+    if (
+      command.memberPermission
+      && !(message.member?.permissions.has(command.memberPermission))
+    ) return client.embeds.permissionError({ message, permission: command.memberPermission, user: 'You' });
+
+    if (
+      command.botPermission
+      && !(message.guild.members.me?.permissions.has(command.botPermission))
+    ) return client.embeds.permissionError({ message, permission: command.botPermission, user: 'I' });
+
+    try {
+      return await command.run({
+        message,
+        args,
+        client,
+      });
+    } catch (e: any) {
+      client.logger.error(e.stack);
+      return client.embeds.error({ message, reason: `An error occured while running the command.\n\`\`\`sh\n${e}\`\`\`` });
+    }
   },
 });

@@ -1,31 +1,37 @@
 import chalk from 'chalk';
+import fastify from 'fastify';
 import {
-  ApplicationCommandDataResolvable,
-  Client, ClientEvents, ClientOptions, Collection, Routes,
+  Client, ClientEvents, ClientOptions, Collection, Colors, Routes,
 } from 'discord.js';
-import glob from 'glob';
-import { promisify } from 'util';
-import { Event, MessageCommand } from '../structures';
-import { env } from './env';
-import { logger } from '.';
-import { SlashCommand } from '../structures/slashCommand';
-
-const globPromise = promisify(glob);
+import {
+  logger, embedGenerator, globPromise, colors, emoji,
+} from '../util';
+import { Event, MessageCommand, SlashCommand } from '../structures';
+import { env } from '.';
 
 export interface ExtendedClientOptions extends ClientOptions {
   loggingEnabled?: boolean;
+  serverEnabled?: boolean;
 }
+
+const ExtendedColors = { ...Colors, ...colors };
 
 export class ExtendedClient extends Client {
   public messageCommands: Collection<string, MessageCommand> = new Collection();
-
-  public messageCommandAliases: Collection<string, MessageCommand> = new Collection();
 
   public slashCommands: Collection<string, SlashCommand> = new Collection();
 
   public loggingEnabled?: boolean;
 
+  public serverEnabled?: boolean;
+
+  public embeds = embedGenerator;
+
   public logger = logger;
+
+  public colors = ExtendedColors;
+
+  public emoji = emoji;
 
   constructor(options: ExtendedClientOptions) {
     super({ ...options });
@@ -33,8 +39,27 @@ export class ExtendedClient extends Client {
   }
 
   start() {
-    this.login(env.BOT_TOKEN);
     this.registerModules();
+    this.login(env.BOT_TOKEN);
+    if (this.serverEnabled) this.startServer();
+  }
+
+  async startServer() {
+    const app = fastify({ logger: false });
+    const port = env.PORT || 3000;
+
+    app.get('/', (_req, rep) => rep.send('Hello server!'));
+
+    app.listen({ port }, (err) => {
+      if (err) {
+        this.logger.error(err);
+        process.exit(1);
+      }
+    });
+
+    app.ready(() => {
+      this.logger.info(`Listening on port ${chalk.bold(port)}`);
+    });
   }
 
   async importFile(filePath: string) {
@@ -65,34 +90,34 @@ export class ExtendedClient extends Client {
       if (!command.name || !command.run) return logger.warn('A message command is missing a name, description, or a run function!');
       if (this.loggingEnabled) logger.info(`${chalk.bold(command.name)} message command loaded!`);
       this.messageCommands.set(command.name, command);
-      if (command.aliases) {
-        command.aliases.forEach((alias) => {
-          this.messageCommandAliases.set(alias, command);
-        });
-      }
     });
   }
 
   async registerSlashCommands() {
-    const slashCommands: ApplicationCommandDataResolvable[] = [];
     const commandFiles = await globPromise(`${__dirname}/../slashCommands/**/*{.ts,.js}`);
 
-    commandFiles.forEach(async (path) => {
+    for await (const path of commandFiles) {
       const command: SlashCommand = await this.importFile(path);
       if (!command.name || !command.description || !command.run) return logger.warn('A slash command is missing a name, description, or run function!');
       if (this.loggingEnabled) logger.info(`${chalk.bold(command.name)} slash command loaded!`);
+
       this.slashCommands.set(command.name, command);
-      slashCommands.push(command);
+    }
 
-      try {
-        await this.rest.put(Routes.applicationCommands(env.CLIENT_ID), {
-          body: slashCommands,
-        });
+    const slashCommands = this.slashCommands.map(
+      ({
+        memberPermission, botPermission, run, category, ...cmd
+      }) => cmd,
+    );
 
-        logger.info('Registered all slash commands!');
-      } catch (e) {
-        logger.error(e);
-      }
-    });
+    try {
+      await this.rest.put(Routes.applicationCommands(env.CLIENT_ID), {
+        body: slashCommands,
+      });
+
+      logger.info('Registered all slash commands!');
+    } catch (e) {
+      logger.error(e);
+    }
   }
 }

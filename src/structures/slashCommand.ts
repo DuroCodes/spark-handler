@@ -1,4 +1,9 @@
-import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOptionResolver } from 'discord.js';
+import {
+  ApplicationCommandOptionData,
+  ChatInputApplicationCommandData, CommandInteraction,
+  CommandInteractionOptionResolver,
+  PermissionResolvable,
+} from 'discord.js';
 import { ExtendedClient } from '../lib';
 
 export interface SlashCommandRunOptions {
@@ -11,9 +16,12 @@ type RunFunction = (options: SlashCommandRunOptions) => any;
 
 export type SlashCommandOptions = {
   name: string;
-  category?: string[];
+  category?: string;
   description: string;
   run: RunFunction;
+  memberPermission?: PermissionResolvable;
+  botPermission?: PermissionResolvable;
+  options?: ApplicationCommandOptionData[];
 } & ChatInputApplicationCommandData;
 
 /**
@@ -21,7 +29,7 @@ export type SlashCommandOptions = {
  * export default new SlashCommand({
  *   name: 'ping',
  *   description: 'replies with pong',
- *   category?: ['info'],
+ *   category?: 'info',
  *   run({ interaction }) {
  *     interaction.reply('Pong!');
  *   },
@@ -30,13 +38,19 @@ export type SlashCommandOptions = {
 export class SlashCommand implements SlashCommandOptions {
   public name!: string;
 
-  public category?: string[];
+  public category?: string;
 
   public description!: string;
 
   public run!: RunFunction;
 
-  constructor(options: SlashCommandOptions) {
-    Object.assign(this, options);
+  public memberPermission?: PermissionResolvable;
+
+  public botPermission?: PermissionResolvable;
+
+  public options?: ApplicationCommandOptionData[];
+
+  constructor(opt: SlashCommandOptions) {
+    Object.assign(this, opt);
   }
 }

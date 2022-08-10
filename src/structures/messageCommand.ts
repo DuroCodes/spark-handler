@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { Message, PermissionResolvable } from 'discord.js';
 import { ExtendedClient } from '../lib';
 
 export interface MessageCommandRunOptions {
@@ -13,8 +13,10 @@ export interface MessageCommandOptions {
   name: string;
   description: string;
   aliases?: string[];
-  category?: string[];
+  category?: string;
   run: RunFunction;
+  memberPermission?: PermissionResolvable;
+  botPermission?: PermissionResolvable;
 }
 
 /**
@@ -23,7 +25,7 @@ export interface MessageCommandOptions {
  *   name: 'ping',
  *   description: 'replies with pong!',
  *   aliases?: ['p'],
- *   category?: ['info'],
+ *   category?: 'info',
  *   run: ({ message }) => {
  *     message.reply('Pong!');
  *   },
@@ -36,9 +38,13 @@ export class MessageCommand implements MessageCommandOptions {
 
   public aliases?: string[];
 
-  public category?: string[];
+  public category?: string;
 
   public run!: RunFunction;
+
+  public memberPermission?: PermissionResolvable;
+
+  public botPermission?: PermissionResolvable;
 
   constructor(options: MessageCommandOptions) {
     Object.assign(this, options);

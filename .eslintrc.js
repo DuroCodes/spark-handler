@@ -25,5 +25,6 @@ module.exports = {
     'no-shadow': 'off',
     'linebreak-style': 'off',
     'no-void': 'off',
+    'no-restricted-syntax': 'off',
   },
 };
