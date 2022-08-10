@@ -16,9 +16,10 @@ type RunFunction = (options: SlashCommandRunOptions) => any;
 
 export type SlashCommandOptions = {
   name: string;
-  category?: string;
   description: string;
   run: RunFunction;
+  category?: string;
+  cooldown?: number;
   memberPermission?: PermissionResolvable;
   botPermission?: PermissionResolvable;
   options?: ApplicationCommandOptionData[];
@@ -38,15 +39,17 @@ export type SlashCommandOptions = {
 export class SlashCommand implements SlashCommandOptions {
   public name!: string;
 
-  public category?: string;
-
   public description!: string;
 
   public run!: RunFunction;
 
+  public category?: string;
+
   public memberPermission?: PermissionResolvable;
 
   public botPermission?: PermissionResolvable;
+
+  public cooldown?: number;
 
   public options?: ApplicationCommandOptionData[];
 

@@ -21,6 +21,10 @@ export class ExtendedClient extends Client {
 
   public slashCommands: Collection<string, SlashCommand> = new Collection();
 
+  public messageCommandCooldowns: Collection<string, number> = new Collection();
+
+  public slashCommandCooldowns: Collection<string, number> = new Collection();
+
   public loggingEnabled?: boolean;
 
   public serverEnabled?: boolean;
@@ -106,7 +110,7 @@ export class ExtendedClient extends Client {
 
     const slashCommands = this.slashCommands.map(
       ({
-        memberPermission, botPermission, run, category, ...cmd
+        memberPermission, botPermission, run, category, cooldown, ...cmd
       }) => cmd,
     );
 

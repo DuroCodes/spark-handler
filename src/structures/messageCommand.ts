@@ -12,9 +12,10 @@ type RunFunction = (options: MessageCommandRunOptions) => any;
 export interface MessageCommandOptions {
   name: string;
   description: string;
+  run: RunFunction;
   aliases?: string[];
   category?: string;
-  run: RunFunction;
+  cooldown?: number;
   memberPermission?: PermissionResolvable;
   botPermission?: PermissionResolvable;
 }
@@ -36,15 +37,17 @@ export class MessageCommand implements MessageCommandOptions {
 
   public description!: string;
 
+  public run!: RunFunction;
+
   public aliases?: string[];
 
   public category?: string;
 
-  public run!: RunFunction;
-
   public memberPermission?: PermissionResolvable;
 
   public botPermission?: PermissionResolvable;
+
+  public cooldown?: number;
 
   constructor(options: MessageCommandOptions) {
     Object.assign(this, options);
