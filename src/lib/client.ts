@@ -82,7 +82,9 @@ export class ExtendedClient extends Client {
       const event: Event<keyof ClientEvents> = await this.importFile(path);
       if (!event.event || !event.run) return logger.warn('An event is missing a name or a run function!');
       if (this.loggingEnabled) logger.info(`${chalk.bold(event.event)} event loaded!`);
-      this.on(event.event, event.run);
+
+      if (event.once) return this.once(event.event, event.run);
+      return this.on(event.event, event.run);
     });
   }
 
