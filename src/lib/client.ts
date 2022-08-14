@@ -110,15 +110,13 @@ export class ExtendedClient extends Client {
       this.slashCommands.set(command.name, command);
     }
 
-    const slashCommands = this.slashCommands.map(
-      ({
-        memberPermission, botPermission, run, category, cooldown, ...cmd
-      }) => cmd,
+    const body = this.slashCommands.map(
+      ({ name, description, options }) => ({ name, description, options }),
     );
 
     try {
       await this.rest.put(Routes.applicationCommands(env.CLIENT_ID), {
-        body: slashCommands,
+        body,
       });
 
       logger.info('Registered all slash commands!');
