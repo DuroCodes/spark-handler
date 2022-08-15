@@ -91,8 +91,8 @@ export class ExtendedClient extends Client {
     const eventFiles = await globPromise(`${__dirname}/../${this.directories?.events}/**/*{.ts,.js}`);
     eventFiles.forEach(async (path) => {
       const event: Event<keyof ClientEvents> = await this.importFile(path);
-      if (!event.event || !event.run) return logger.warn('An event is missing a name or a run function!');
-      if (this.loggingEnabled) logger.info(`${chalk.bold(event.event)} event loaded!`);
+      if (!event.event || !event.run) return this.logger.warn('An event is missing a name or a run function!');
+      if (this.loggingEnabled) this.logger.info(`${chalk.bold(event.event)} event loaded!`);
 
       if (event.once) return this.once(event.event, event.run);
       return this.on(event.event, event.run);
@@ -104,8 +104,8 @@ export class ExtendedClient extends Client {
 
     commandFiles.forEach(async (path) => {
       const command: MessageCommand = await this.importFile(path);
-      if (!command.name || !command.run) return logger.warn('A message command is missing a name, description, or a run function!');
-      if (this.loggingEnabled) logger.info(`${chalk.bold(command.name)} message command loaded!`);
+      if (!command.name || !command.run) return this.logger.warn('A message command is missing a name, description, or a run function!');
+      if (this.loggingEnabled) this.logger.info(`${chalk.bold(command.name)} message command loaded!`);
       this.messageCommands.set(command.name, command);
     });
   }
@@ -115,8 +115,8 @@ export class ExtendedClient extends Client {
 
     for await (const path of commandFiles) {
       const command: SlashCommand = await this.importFile(path);
-      if (!command.name || !command.description || !command.run) return logger.warn('A slash command is missing a name, description, or run function!');
-      if (this.loggingEnabled) logger.info(`${chalk.bold(command.name)} slash command loaded!`);
+      if (!command.name || !command.description || !command.run) return this.logger.warn('A slash command is missing a name, description, or run function!');
+      if (this.loggingEnabled) this.logger.info(`${chalk.bold(command.name)} slash command loaded!`);
 
       this.slashCommands.set(command.name, command);
     }
@@ -130,9 +130,9 @@ export class ExtendedClient extends Client {
         body,
       });
 
-      logger.info('Registered all slash commands!');
+      this.logger.info('Registered all slash commands!');
     } catch (e) {
-      logger.error(e);
+      this.logger.error(e);
     }
   }
 }
