@@ -9,7 +9,14 @@ import {
 import { Event, MessageCommand, SlashCommand } from '../structures';
 import { env } from '.';
 
+export interface DirectoryOptions {
+  messageCommands?: string,
+  slashCommands?: string,
+  events?: string,
+}
+
 export interface ExtendedClientOptions extends ClientOptions {
+  directories?: DirectoryOptions;
   loggingEnabled?: boolean;
   serverEnabled?: boolean;
 }
@@ -24,6 +31,10 @@ export class ExtendedClient extends Client {
   public messageCommandCooldowns: Collection<string, number> = new Collection();
 
   public slashCommandCooldowns: Collection<string, number> = new Collection();
+
+  public directories?: DirectoryOptions = {
+    slashCommands: 'slashCommands', messageCommands: 'messageCommands', events: 'events',
+  };
 
   public loggingEnabled?: boolean;
 
@@ -77,7 +88,7 @@ export class ExtendedClient extends Client {
   }
 
   async registerEvents() {
-    const eventFiles = await globPromise(`${__dirname}/../events/**/*{.ts,.js}`);
+    const eventFiles = await globPromise(`${__dirname}/../${this.directories?.events}/**/*{.ts,.js}`);
     eventFiles.forEach(async (path) => {
       const event: Event<keyof ClientEvents> = await this.importFile(path);
       if (!event.event || !event.run) return logger.warn('An event is missing a name or a run function!');
@@ -89,7 +100,7 @@ export class ExtendedClient extends Client {
   }
 
   async registerMessageCommands() {
-    const commandFiles = await globPromise(`${__dirname}/../messageCommands/**/*{.ts,.js}`);
+    const commandFiles = await globPromise(`${__dirname}/../${this.directories?.slashCommands}/**/*{.ts,.js}`);
 
     commandFiles.forEach(async (path) => {
       const command: MessageCommand = await this.importFile(path);
@@ -100,7 +111,7 @@ export class ExtendedClient extends Client {
   }
 
   async registerSlashCommands() {
-    const commandFiles = await globPromise(`${__dirname}/../slashCommands/**/*{.ts,.js}`);
+    const commandFiles = await globPromise(`${__dirname}/../${this.directories?.messageCommands}/**/*{.ts,.js}`);
 
     for await (const path of commandFiles) {
       const command: SlashCommand = await this.importFile(path);
