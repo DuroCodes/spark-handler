@@ -66,4 +66,4 @@ export default new MessageCommand({
 
 ---
 
-If you have any questions or issues, dm me on Discord: `Duro#5232`. 
+If you have any **questions**, **issues**, or **suggestions**, dm me on Discord: `Duro#5232`. 
