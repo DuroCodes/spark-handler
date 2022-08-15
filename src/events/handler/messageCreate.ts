@@ -20,7 +20,7 @@ export default new Event({
 
     if (!cmd) return;
 
-    const command = client.messageCommands.get(cmd.toLocaleLowerCase())
+    const command = client.messageCommands.get(cmd.toLowerCase())
       || client.messageCommands.find((c) => !!c.aliases?.includes(cmd.toLowerCase()));
 
     if (!command) return;
