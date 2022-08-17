@@ -15,9 +15,11 @@ export interface MessageCommandOptions {
   run: RunFunction;
   aliases?: string[];
   category?: string;
-  cooldown?: number;
   memberPermission?: PermissionResolvable;
   botPermission?: PermissionResolvable;
+  requiredRoleId?: string | string[];
+  requiredRoleName?: string | string[];
+  cooldown?: number;
 }
 
 /**
@@ -46,6 +48,10 @@ export class MessageCommand implements MessageCommandOptions {
   public memberPermission?: PermissionResolvable;
 
   public botPermission?: PermissionResolvable;
+
+  public requiredRoleId?: string | string[];
+
+  public requiredRoleName?: string | string[];
 
   public cooldown?: number;
 

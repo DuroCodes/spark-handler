@@ -19,9 +19,11 @@ export type SlashCommandOptions = {
   description: string;
   run: RunFunction;
   category?: string;
-  cooldown?: number;
   memberPermission?: PermissionResolvable;
   botPermission?: PermissionResolvable;
+  requiredRoleId?: string[] | string;
+  requiredRoleName?: string[] | string;
+  cooldown?: number;
   options?: ApplicationCommandOptionData[];
 } & ChatInputApplicationCommandData;
 
@@ -48,6 +50,10 @@ export class SlashCommand implements SlashCommandOptions {
   public memberPermission?: PermissionResolvable;
 
   public botPermission?: PermissionResolvable;
+
+  public requiredRoleId?: string[] | string;
+
+  public requiredRoleName?: string[] | string;
 
   public cooldown?: number;
 
