@@ -100,7 +100,7 @@ export class ExtendedClient extends Client {
   }
 
   async registerMessageCommands() {
-    const commandFiles = await globPromise(`${__dirname}/../${this.directories?.slashCommands}/**/*{.ts,.js}`);
+    const commandFiles = await globPromise(`${__dirname}/../${this.directories?.messageCommands}/**/*{.ts,.js}`);
 
     commandFiles.forEach(async (path) => {
       const command: MessageCommand = await this.importFile(path);
@@ -111,7 +111,7 @@ export class ExtendedClient extends Client {
   }
 
   async registerSlashCommands() {
-    const commandFiles = await globPromise(`${__dirname}/../${this.directories?.messageCommands}/**/*{.ts,.js}`);
+    const commandFiles = await globPromise(`${__dirname}/../${this.directories?.slashCommands}/**/*{.ts,.js}`);
 
     for await (const path of commandFiles) {
       const command: SlashCommand = await this.importFile(path);
