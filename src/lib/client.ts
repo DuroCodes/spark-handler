@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import chalk from 'chalk';
 import fastify from 'fastify';
 import { Logger } from '@spark.ts/logger';
