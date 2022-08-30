@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@spark.ts/logger": "^1.0.4",
     "chalk": "^5.0.1",
     "discord.js": "^14.3.0",
     "fastify": "^4.4.0",

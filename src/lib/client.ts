@@ -1,12 +1,13 @@
 import chalk from 'chalk';
 import fastify from 'fastify';
+import { Logger } from '@spark.ts/logger';
 import {
   Client, ClientEvents, ClientOptions, Collection, Colors, Routes,
 } from 'discord.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import {
-  Logger, embedGenerator, globPromise, colors, emoji,
+  embedGenerator, globPromise, colors, emoji,
 } from '../util/index.js';
 import { Event, MessageCommand, SlashCommand } from '../structures/index.js';
 import { env } from './env.js';
