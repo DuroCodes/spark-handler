@@ -1,5 +1,5 @@
 import { GatewayIntentBits } from 'discord.js';
-import { ExtendedClient } from './lib';
+import { ExtendedClient } from './lib/index.js';
 
 export const client = new ExtendedClient({
   intents: [

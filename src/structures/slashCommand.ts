@@ -4,7 +4,7 @@ import {
   CommandInteractionOptionResolver,
   PermissionResolvable,
 } from 'discord.js';
-import { ExtendedClient } from '../lib';
+import { ExtendedClient } from '../lib/index.js';
 
 export interface SlashCommandRunOptions {
   client: ExtendedClient;

@@ -1,8 +1,8 @@
 import { Events, GuildMemberRoleManager } from 'discord.js';
 import ms from 'ms';
-import { client } from '../..';
-import { env } from '../../lib';
-import { Event } from '../../structures';
+import { client } from '../../index.js';
+import { env } from '../../lib/index.js';
+import { Event } from '../../structures/index.js';
 
 export default new Event({
   event: Events.MessageCreate,

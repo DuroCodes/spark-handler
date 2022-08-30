@@ -17,7 +17,7 @@ If you would like to add a new event to the bot, create a file in the `src/event
 
 ```ts
 import { Events } from 'discord.js';
-import { Event } from '../structures';
+import { Event } from '../structures/index.js';
 
 export default new Event({
   event: '<event name> or enum from Events',
@@ -31,7 +31,7 @@ export default new Event({
 If you would like to add a **slash command** to the bot, create a file in the `src/slashCommands` directory (or sub-folder inside) with the structure:
 
 ```ts
-import { SlashCommand } from '../structures';
+import { SlashCommand } from '../structures/index.js';
 
 export default new SlashCommand({
   name: 'ping',
@@ -45,7 +45,7 @@ export default new SlashCommand({
 If you would like to add a **message command** to the bot, create a file in the `src/messageCommands` directory (or sub-folder inside) with the structure:
 
 ```ts
-import { MessageCommand } from '../structures';
+import { MessageCommand } from '../structures/index.js';
 
 export default new MessageCommand({
   name: 'ping',

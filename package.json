@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "description": "a discord.js handler in typescript",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "start": "npm run build && node dist/index.js",
     "build": "tsc",
-    "test": "ts-node src/index.ts"
+    "test": "ts-node --experimental-specifier-resolution=node --esm src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^4.1.2",
-    "discord.js": "^14.1.2",
+    "chalk": "^5.0.1",
+    "discord.js": "^14.3.0",
     "fastify": "^4.4.0",
     "glob": "^8.0.3",
     "ms": "^2.1.3",

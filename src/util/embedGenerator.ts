@@ -1,7 +1,8 @@
 import {
   CommandInteraction, PermissionResolvable, EmbedBuilder, SelectMenuInteraction, Message,
 } from 'discord.js';
-import { emoji, logger } from '.';
+import { emoji } from './emoji.js';
+import { client } from '../index.js';
 
 interface EmbedGeneratorOptions {
   interaction?: CommandInteraction | SelectMenuInteraction;
@@ -34,7 +35,7 @@ export const embedGenerator = {
 
     if (interaction) return interaction.followUp({ embeds: [embed] });
     if (message) return message.reply({ embeds: [embed] });
-    return logger.trace('The function requires you to supply an interaction or message!');
+    return client.logger.warn('The function requires you to supply an interaction or message!');
   },
 
   error({ interaction, reason, message }: BasicEmbedOptions) {
@@ -45,7 +46,7 @@ export const embedGenerator = {
 
     if (interaction) return interaction.followUp({ embeds: [embed] });
     if (message) return message.reply({ embeds: [embed] });
-    return logger.trace('The function requires you to supply an interaction or message!');
+    return client.logger.warn('The function requires you to supply an interaction or message!');
   },
 
   success({ interaction, reason, message }: BasicEmbedOptions) {
@@ -56,7 +57,7 @@ export const embedGenerator = {
 
     if (interaction) return interaction.followUp({ embeds: [embed] });
     if (message) return message.reply({ embeds: [embed] });
-    return logger.trace('The function requires you to supply an interaction or message!');
+    return client.logger.warn('The function requires you to supply an interaction or message!');
   },
 
   punishment({
@@ -75,6 +76,6 @@ export const embedGenerator = {
 
     if (interaction) return interaction.followUp({ embeds: [embed] });
     if (message) return message.reply({ embeds: [embed] });
-    return logger.trace('The function requires you to supply an interaction or message!');
+    return client.logger.warn('The function requires you to supply an interaction or message!');
   },
 };

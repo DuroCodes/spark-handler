@@ -1,3 +1,3 @@
-export * from './messageCommand';
-export * from './slashCommand';
-export * from './event';
+export * from './messageCommand.js';
+export * from './slashCommand.js';
+export * from './event.js';

@@ -2,8 +2,8 @@ import {
   CommandInteractionOptionResolver, Events, GuildMemberRoleManager, PermissionsBitField,
 } from 'discord.js';
 import ms from 'ms';
-import { client } from '../..';
-import { Event } from '../../structures';
+import { client } from '../../index.js';
+import { Event } from '../../structures/index.js';
 
 export default new Event({
   event: Events.InteractionCreate,

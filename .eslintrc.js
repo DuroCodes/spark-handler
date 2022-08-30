@@ -16,8 +16,8 @@ module.exports = {
   ],
   rules: {
     'import/prefer-default-export': 'off',
-    'import/no-unresolved': 'off',
-    'import/extensions': 'off',
+    'import/no-unresolved': 'ignorePackages',
+    'import/extensions': 'ignorePackages',
     'no-unused-vars': 'off',
     'class-methods-use-this': 'off',
     'no-inner-declarations': 'off',

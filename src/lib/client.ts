@@ -3,11 +3,16 @@ import fastify from 'fastify';
 import {
   Client, ClientEvents, ClientOptions, Collection, Colors, Routes,
 } from 'discord.js';
+import { fileURLToPath } from 'url';
+import path from 'path';
 import {
-  logger, embedGenerator, globPromise, colors, emoji,
-} from '../util';
-import { Event, MessageCommand, SlashCommand } from '../structures';
-import { env } from '.';
+  Logger, embedGenerator, globPromise, colors, emoji,
+} from '../util/index.js';
+import { Event, MessageCommand, SlashCommand } from '../structures/index.js';
+import { env } from './env.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export interface DirectoryOptions {
   messageCommands?: string,
@@ -42,7 +47,10 @@ export class ExtendedClient extends Client {
 
   public embeds = embedGenerator;
 
-  public logger = logger;
+  public logger = new Logger({
+    logLevel: 'success',
+    logStyle: 'highlight',
+  });
 
   public colors = ExtendedColors;
 
@@ -130,7 +138,7 @@ export class ExtendedClient extends Client {
         body,
       });
 
-      this.logger.info('Registered all slash commands!');
+      this.logger.success('Registered all slash commands!');
     } catch (e) {
       this.logger.error(e);
     }

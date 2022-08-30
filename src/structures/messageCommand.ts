@@ -1,5 +1,5 @@
 import { Message, PermissionResolvable } from 'discord.js';
-import { ExtendedClient } from '../lib';
+import { ExtendedClient } from '../lib/index.js';
 
 export interface MessageCommandRunOptions {
   client: ExtendedClient;

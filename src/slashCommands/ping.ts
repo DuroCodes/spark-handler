@@ -1,4 +1,4 @@
-import { SlashCommand } from '../structures';
+import { SlashCommand } from '../structures/index.js';
 
 export default new SlashCommand({
   name: 'ping',

@@ -1,4 +1,4 @@
-import { MessageCommand } from '../structures';
+import { MessageCommand } from '../structures/index.js';
 
 export default new MessageCommand({
   name: 'ping',
