@@ -7,11 +7,7 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "strict": true,
-
-    /* Declaration & Maps */
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
 
     /* Paths */
     "outDir": "./dist",
