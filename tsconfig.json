@@ -5,10 +5,13 @@
     "module": "ESNext",
     "target": "ESNext",
     "skipLibCheck": true,
-    "strict": true,
-    "sourceMap": true,
-    "jsx": "react",
     "moduleResolution": "node",
+    "strict": true,
+
+    /* Declaration & Maps */
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
 
     /* Paths */
     "outDir": "./dist",

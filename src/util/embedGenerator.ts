@@ -4,21 +4,21 @@ import {
 import { emoji } from './emoji.js';
 import { client } from '../index.js';
 
-interface EmbedGeneratorOptions {
+export interface EmbedGeneratorOptions {
   interaction?: CommandInteraction | SelectMenuInteraction;
   message?: Message;
 }
 
-interface PermissionErrorOptions extends EmbedGeneratorOptions {
+export interface PermissionErrorOptions extends EmbedGeneratorOptions {
   permission: PermissionResolvable;
   user: 'I' | 'You';
 }
 
-interface BasicEmbedOptions extends EmbedGeneratorOptions {
+export interface BasicEmbedOptions extends EmbedGeneratorOptions {
   reason: string;
 }
 
-type PunishmentEmbedOptions = {
+export type PunishmentEmbedOptions = {
   type: 'Ban' | 'Kick' | 'Unban';
   reason?: string;
   user: string;
