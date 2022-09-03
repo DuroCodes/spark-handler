@@ -28,7 +28,7 @@ export default new Event({
       ) return client.embeds.permissionError({ interaction, permission: command.botPermission, user: 'I' });
 
       if (command.requiredRoleId) {
-        if (command.requiredRoleId instanceof Array
+        if (Array.isArray(command.requiredRoleId)
           && !(command.requiredRoleId.some(
             (x) => (interaction.member?.roles as GuildMemberRoleManager).cache.has(x),
           ))
@@ -52,9 +52,9 @@ export default new Event({
         }
 
         if (
-          !(command.requiredRoleId instanceof Array)
-          && !((interaction.member?.roles as GuildMemberRoleManager)
-            .cache.has(command.requiredRoleId as string))
+          !Array.isArray(command.requiredRoleId)
+          && !(interaction.member?.roles as GuildMemberRoleManager)
+            .cache.has(command.requiredRoleId as string)
         ) {
           const requiredRole = interaction.guild?.roles.cache.get(command.requiredRoleId as string);
 
@@ -74,7 +74,7 @@ export default new Event({
       }
 
       if (command.requiredRoleName) {
-        if (command.requiredRoleName instanceof Array
+        if (Array.isArray(command.requiredRoleName)
           && !(command.requiredRoleName.some(
             (x) => (
               interaction.member?.roles as GuildMemberRoleManager).cache.some((y) => y.name === x),
@@ -99,10 +99,10 @@ export default new Event({
         }
 
         if (
-          !(command.requiredRoleName instanceof Array)
-          && !((interaction.member?.roles as GuildMemberRoleManager).cache.some(
+          !Array.isArray(command.requiredRoleName)
+          && !(interaction.member?.roles as GuildMemberRoleManager).cache.some(
             (x) => x.name === command.requiredRoleName,
-          ))
+          )
         ) {
           const requiredRole = interaction.guild?.roles.cache.find(
             (x) => x.name === command.requiredRoleName,

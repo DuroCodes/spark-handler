@@ -36,10 +36,10 @@ export default new Event({
     ) return client.embeds.permissionError({ message, permission: command.botPermission, user: 'I' });
 
     if (command.requiredRoleId) {
-      if (command.requiredRoleId instanceof Array
-        && !(command.requiredRoleId.some(
+      if (Array.isArray(command.requiredRoleId)
+        && !command.requiredRoleId.some(
           (x) => (message.member?.roles as GuildMemberRoleManager).cache.has(x),
-        ))
+        )
       ) {
         const requiredRoles = command.requiredRoleId.map(
           (x) => message.guild?.roles.cache.get(x),
@@ -60,9 +60,9 @@ export default new Event({
       }
 
       if (
-        !(command.requiredRoleId instanceof Array)
-        && !((message.member?.roles as GuildMemberRoleManager)
-          .cache.has(command.requiredRoleId as string))
+        !Array.isArray(command.requiredRoleId)
+        && !(message.member?.roles as GuildMemberRoleManager)
+          .cache.has(command.requiredRoleId as string)
       ) {
         const requiredRole = message.guild?.roles.cache.get(command.requiredRoleId as string);
 
@@ -82,11 +82,11 @@ export default new Event({
     }
 
     if (command.requiredRoleName) {
-      if (command.requiredRoleName instanceof Array
-        && !(command.requiredRoleName.some(
+      if (Array.isArray(command.requiredRoleName)
+        && !command.requiredRoleName.some(
           (x) => (
             message.member?.roles as GuildMemberRoleManager).cache.some((y) => y.name === x),
-        ))
+        )
       ) {
         const requiredRoles = command.requiredRoleName.map(
           (x) => message.guild?.roles.cache.find((y) => y.name === x),
@@ -107,10 +107,10 @@ export default new Event({
       }
 
       if (
-        !(command.requiredRoleName instanceof Array)
-        && !((message.member?.roles as GuildMemberRoleManager).cache.some(
+        !Array.isArray(command.requiredRoleName)
+        && !(message.member?.roles as GuildMemberRoleManager).cache.some(
           (x) => x.name === command.requiredRoleName,
-        ))
+        )
       ) {
         const requiredRole = message.guild?.roles.cache.find(
           (x) => x.name === command.requiredRoleName,
