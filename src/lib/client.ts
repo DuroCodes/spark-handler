@@ -5,7 +5,7 @@ import { Logger } from '@spark.ts/logger';
 import {
   Client, ClientEvents, ClientOptions, Collection, Colors, Routes,
 } from 'discord.js';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import path from 'path';
 import {
   embedGenerator, globPromise, colors, emoji,
@@ -88,7 +88,7 @@ export class ExtendedClient extends Client {
   }
 
   async importFile(filePath: string) {
-    return (await import(filePath))?.default;
+    return (await import(pathToFileURL(filePath).toString()))?.default;
   }
 
   async registerModules() {
