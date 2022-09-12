@@ -98,7 +98,7 @@ export class ExtendedClient extends Client {
   }
 
   async registerEvents() {
-    const eventFiles = await globPromise(`${__dirname}/../${this.directories?.events}/**/*{.ts,.js}`);
+    const eventFiles = await globPromise(`${__dirname.replace(/\\/g, '/')}/../${this.directories?.events}/**/*{.ts,.js}`);
     eventFiles.forEach(async (path) => {
       const event: Event<keyof ClientEvents> = await this.importFile(path);
       if (!event.event || !event.run) return this.logger.warn('An event is missing a name or a run function!');
@@ -110,7 +110,7 @@ export class ExtendedClient extends Client {
   }
 
   async registerMessageCommands() {
-    const commandFiles = await globPromise(`${__dirname}/../${this.directories?.messageCommands}/**/*{.ts,.js}`);
+    const commandFiles = await globPromise(`${__dirname.replace(/\\/g, '/')}/../${this.directories?.messageCommands}/**/*{.ts,.js}`);
 
     commandFiles.forEach(async (path) => {
       const command: MessageCommand = await this.importFile(path);
@@ -121,7 +121,7 @@ export class ExtendedClient extends Client {
   }
 
   async registerSlashCommands() {
-    const commandFiles = await globPromise(`${__dirname}/../${this.directories?.slashCommands}/**/*{.ts,.js}`);
+    const commandFiles = await globPromise(`${__dirname.replace(/\\/g, '/')}/../${this.directories?.slashCommands}/**/*{.ts,.js}`);
 
     for await (const path of commandFiles) {
       const command: SlashCommand = await this.importFile(path);
